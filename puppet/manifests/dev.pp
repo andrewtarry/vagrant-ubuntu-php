@@ -1,5 +1,4 @@
 node 'dev' {
-	package { "apache":
-		ensure => installed,
-	}
+
+	class { 'apache': }	
 }
