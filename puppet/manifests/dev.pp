@@ -1,4 +1,12 @@
+exec { "apt-get update":
+    command => "/usr/bin/apt-get update"	   
+}
+
 node 'dev' {
 
-	class { 'apache': }	
+	# PHP
+	class { 'php': }
+
+	class { 'nodejs': }
+
 }
