@@ -1,7 +1,7 @@
 class nodejs::load {
 
 	package { "nodejs":
-		require => Exec['apt-get update'],
+		require => Exec['update'],
 		ensure => installed,
 	}
 }

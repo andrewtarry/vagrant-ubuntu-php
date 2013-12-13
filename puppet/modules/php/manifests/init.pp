@@ -1,5 +1,5 @@
-class php {
+class php ($version = '55'){
 
-	include python, php::latest, php::load
+	include python, php::params, php::latest, php::install
 
 }

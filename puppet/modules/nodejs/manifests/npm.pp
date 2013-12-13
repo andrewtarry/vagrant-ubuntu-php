@@ -1,7 +1,7 @@
 class nodejs::npm {
 
 	package { "npm":
-		require => Exec['apt-get update'],
+		require => Exec['update'],
 		ensure => installed,
 	}
 

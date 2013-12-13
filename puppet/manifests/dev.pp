@@ -1,12 +1,16 @@
-exec { "apt-get update":
-    command => "/usr/bin/apt-get update"	   
+include update
+
+exec { "update_repo":
+    command => $update::params::cmd	   
 }
 
 node 'dev' {
 
 	# PHP
-	class { 'php': }
+	class { 'php':
+		version => '53',
+	}
 
-	class { 'nodejs': }
+	# class { 'nodejs': }
 
 }
