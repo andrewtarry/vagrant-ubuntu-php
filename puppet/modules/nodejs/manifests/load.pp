@@ -1,7 +1,7 @@
 class nodejs::load {
 
 	package { "nodejs":
-		require => Exec['update'],
+		require => Exec['update_repo'],
 		ensure => installed,
 	}
 }

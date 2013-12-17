@@ -1,7 +1,7 @@
 class php::params {
 	case $operatingsystem {
 		Centos: {
-			$php55_package = 'php55w'
+			$php55_package = 'php'
 		}
 		/(Ubuntu|Debian)/: {
 			$php55_package = 'php5'
