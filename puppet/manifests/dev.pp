@@ -24,6 +24,8 @@ node 'dev' {
 		version => '53'
 	}
 
+	class { 'phpmyadmin': }
+
 	class { 'nodejs': }
 
 	class { 'apache': }
