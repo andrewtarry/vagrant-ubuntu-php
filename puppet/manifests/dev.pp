@@ -1,6 +1,11 @@
 $docRoot = "/home/vagrant/site/dev"
 $docRootPath = ["/home/vagrant/site", $docRoot]
 
+$gcc = true
+$git = true
+$re2c = true
+$jsonc = true
+
 include update
 
 exec { "update_repo":
@@ -11,7 +16,13 @@ exec { "update_repo":
 
 node 'dev' {
 
-	class { 'git': }
+	if $gcc {
+		include gcc
+	}
+
+	if $git { 
+		 include git
+	}
 
 	class { 'vim': }
 
@@ -20,8 +31,9 @@ node 'dev' {
 	}
 
 # 	# PHP
-	class { 'php':
-		version => '53'
+	class { 'php': 
+		dev => true,
+		libpcre => true
 	}
 
 	class { 'phpmyadmin': }
@@ -31,8 +43,25 @@ node 'dev' {
 	class { 'apache': }
 
 	apache::vhost { 'devSite':
-	   docroot  => $docRoot 
+	   docroot  => $docRoot
 	}
 
 	class { 'mysql': }
+
+
+	if $re2c {
+
+		package{ 're2c':
+			ensure => installed,
+			require => Exec['update_repo'],
+		}
+
+	}
+
+	if $jsonc {
+
+		class { 'jsonc': 
+			dbg => false
+		}
+	}
 }
