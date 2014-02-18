@@ -1,10 +1,14 @@
-$docRoot = "/home/vagrant/site/dev"
-$docRootPath = ["/home/vagrant/site", $docRoot]
+$docRoot = "/home/vagrant/app"
+$docRootPath = ["/home/vagrant/app/web", $docRoot]
 
 $gcc = true
 $git = true
-$re2c = true
-$jsonc = true
+$re2c = false
+$jsonc = false
+$php = true
+$apache = true
+$nodejs = false
+$mysql = true
 
 include update
 
@@ -31,23 +35,36 @@ node 'dev' {
 	}
 
 # 	# PHP
-	class { 'php': 
-		dev => true,
-		libpcre => true
+
+	if $php {
+		class { 'php': 
+			dev => true,
+			libpcre => true
+		}
+
+		class { 'phpmyadmin': }
+
 	}
 
-	class { 'phpmyadmin': }
+	if $nodejs {
+		class { 'nodejs': }
 
-	class { 'nodejs': }
-
-	class { 'apache': }
-
-	apache::vhost { 'devSite':
-	   docroot  => $docRoot
 	}
 
-	class { 'mysql': }
+	if $apache {
 
+		class { 'apache': }
+
+		apache::vhost { 'devSite':
+		   docroot  => $docRoot
+		}
+
+	}
+
+	if $mysql {
+
+		class { 'mysql': }
+	}
 
 	if $re2c {
 
