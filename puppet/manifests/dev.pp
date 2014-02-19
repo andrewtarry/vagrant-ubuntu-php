@@ -1,15 +1,13 @@
-$docRoot = "/home/vagrant/app"
-$docRootPath = ["/home/vagrant/app/web", $docRoot]
+# Load hiera variables
+$git = hiera('git')
+$php = hiera('php')
+$apache = hiera('apache')
+$nodejs = hiera('nodejs')
+$mysql = hiera('mysql')
+$c_tools = hiera('c_tools')
+$vim = hiera('vim')
 
-$gcc = true
-$git = true
-$re2c = false
-$jsonc = false
-$php = true
-$apache = true
-$nodejs = false
-$mysql = true
-
+# Set up update command
 include update
 
 exec { "update_repo":
@@ -18,64 +16,61 @@ exec { "update_repo":
      onlyif => "test -f /usr/bin/apt-get"
 }
 
+# Dev node
 node 'dev' {
 
-	if $gcc {
+	if $c_tools['gcc'] {
 		include gcc
 	}
 
-	if $git { 
+	if $git['install'] { 
 		 include git
 	}
 
-	class { 'vim': }
+	if $vim['install'] {
+		class { 'vim': }
+	}
 
 	class { 'webroot': 
-		dir => $docRootPath
+		dir => [hiera('app_dir'), hiera('web_dir')]
 	}
 
 # 	# PHP
 
-	if $php {
-		class { 'php': 
-			dev => true,
-			libpcre => true
-		}
+	if $php['install'] {
+		class { 'php': }
 
 		class { 'phpmyadmin': }
 
 	}
 
-	if $nodejs {
+	if $nodejs['install'] {
 		class { 'nodejs': }
 
 	}
 
-	if $apache {
-
+	if $apache['install'] {
 		class { 'apache': }
 
 		apache::vhost { 'devSite':
-		   docroot  => $docRoot
+		   docroot  => $apache['docRoot']
 		}
 
 	}
 
-	if $mysql {
-
+	if $mysql['install'] {
 		class { 'mysql': }
 	}
 
-	if $re2c {
+	if $c_tools['re2c'] {
 
 		package{ 're2c':
 			ensure => installed,
 			require => Exec['update_repo'],
 		}
-
 	}
 
-	if $jsonc {
+	if $c_tools['jsonc'] {
 
 		class { 'jsonc': 
 			dbg => false

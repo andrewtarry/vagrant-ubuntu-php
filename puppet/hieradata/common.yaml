@@ -1,0 +1,29 @@
+app_dir: '/home/vagrant/app'
+web_dir: '/home/vagrant/app/web'
+
+php:
+    install: true
+    version: '5.5'
+    dev: true
+    libpcre: true
+
+c_tools:
+    gcc: true
+    jsonc: true
+    re2c: true
+
+git:
+    install: true
+
+vim:
+    install: true
+
+mysql:
+    install: true
+
+nodejs:
+    install: true
+
+apache:
+    install: true
+    docroot: '%{web_dir}'
