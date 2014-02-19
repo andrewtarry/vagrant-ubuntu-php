@@ -72,8 +72,6 @@ node 'dev' {
 
 	if $c_tools['jsonc'] {
 
-		class { 'jsonc': 
-			dbg => false
-		}
+		class { 'jsonc': }
 	}
 }

@@ -27,3 +27,7 @@ nodejs:
 apache:
     install: true
     docroot: '%{web_dir}'
+
+jsonc:
+    dev: true
+    dbg: true

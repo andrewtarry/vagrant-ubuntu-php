@@ -1,5 +1,4 @@
-class jsonc ($dbg = true, 
-	$dev = ture) {
+class jsonc {
 
 	include jsonc::install, jsonc::dev, jsonc::dbg
 

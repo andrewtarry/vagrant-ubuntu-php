@@ -1,6 +1,6 @@
 class jsonc::dbg {
 
-	if $parent::dev {
+	if $jsonc::dbg {
 
 		package{ "libjson0-dbg":
 			ensure => installed,

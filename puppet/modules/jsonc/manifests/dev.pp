@@ -1,6 +1,6 @@
 class jsonc::dev {
 
-	if $parent::dev {
+	if $jsonc::dev {
 
 		package{ "libjson0-dev":
 			ensure => installed,
