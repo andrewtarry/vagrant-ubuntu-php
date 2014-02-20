@@ -6,11 +6,12 @@ php:
     version: '5.5'
     dev: true
     libpcre: true
+    start_server: true
 
 c_tools:
     gcc: true
-    jsonc: true
-    re2c: true
+    jsonc: false
+    re2c: false
 
 git:
     install: true
@@ -19,13 +20,13 @@ vim:
     install: true
 
 mysql:
-    install: true
+    install: false
 
 nodejs:
-    install: true
+    install: false
 
 apache:
-    install: true
+    install: false
     docroot: '%{web_dir}'
 
 jsonc:

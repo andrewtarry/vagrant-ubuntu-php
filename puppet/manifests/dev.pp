@@ -52,7 +52,7 @@ node 'dev' {
 	if $apache['install'] {
 		class { 'apache': }
 
-		apache::vhost { 'devSite':
+		apache::vhost { 'dev-site':
 		   docroot  => $apache['docRoot']
 		}
 
