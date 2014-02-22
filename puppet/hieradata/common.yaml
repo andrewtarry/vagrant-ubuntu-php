@@ -26,8 +26,8 @@ nodejs:
     install: false
 
 apache:
-    install: false
-    docroot: '%{web_dir}'
+    install: true
+    docroot: "%{web_dir}"
 
 jsonc:
     dev: true

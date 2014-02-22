@@ -53,7 +53,9 @@ node 'dev' {
 		class { 'apache': }
 
 		apache::vhost { 'dev-site':
-		   docroot  => $apache['docRoot']
+		   docroot  => hiera('web_dir'),
+		   directory => hiera('web_dir'),
+		   directory_require => 'all granted'
 		}
 
 	}
