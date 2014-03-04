@@ -14,13 +14,13 @@ c_tools:
     re2c: false
 
 git:
-    install: true
+    install: false
 
 vim:
     install: true
 
 mysql:
-    install: false
+    install: true
 
 nodejs:
     install: false

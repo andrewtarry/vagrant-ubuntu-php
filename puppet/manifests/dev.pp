@@ -19,6 +19,9 @@ exec { "update_repo":
 # Dev node
 node 'dev' {
 
+    include curl
+    include bash
+
 	if $c_tools['gcc'] {
 		include gcc
 	}
@@ -41,6 +44,10 @@ node 'dev' {
 		class { 'php': }
 
 		class { 'phpmyadmin': }
+
+        class { 'composer':
+          install_dir => '/usr/bin'
+        }
 
 	}
 
