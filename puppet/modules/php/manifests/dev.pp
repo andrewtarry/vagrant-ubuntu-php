@@ -7,6 +7,11 @@ class php::dev {
 			ensure => installed,
 		}
 
+		package { "php5-xdebug":
+			ensure => installed,
+			require => Exec['update_repo']
+		}
+
 	}
 
 }
