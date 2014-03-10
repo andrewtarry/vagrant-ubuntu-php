@@ -72,17 +72,7 @@ node 'dev' {
 
 		class { 'nodejs': }
 
-		file { '/usr/bin/node':
-		   ensure => 'link',
-		   target => '/usr/bin/nodejs',
-		   require => Class['nodejs']
-		}
-
-		package { 'grunt-cli':
-	      ensure   => latest,
-	      provider => 'npm',
-	      require => File['/usr/bin/node']
-	    }
+		nodejs::npm { 'grunt-cli': }
 
 	}
 
