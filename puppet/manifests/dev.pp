@@ -7,6 +7,7 @@ $mysql = hiera('mysql')
 $c_tools = hiera('c_tools')
 $vim = hiera('vim')
 $dir = hiera('dir')
+$webhostname = hiera('hostname')
 
 $log_dir = $dir['log']
 $cache_dir = $dir['cache']
@@ -25,6 +26,10 @@ node 'dev' {
 
     include curl
     include bash
+
+    class { 'hosts':
+      hostname => $webhostname
+    }
 
 	if $c_tools['gcc'] {
 		include gcc
@@ -78,7 +83,7 @@ node 'dev' {
 	if $apache['install'] {
 		class { 'apache': }
 
-		apache::vhost { 'dev-site':
+		apache::vhost { $webhostname:
 		   docroot  => $dir['web'],
 		   directory => $dir['web'],
 		   directory_allow_override => 'All',

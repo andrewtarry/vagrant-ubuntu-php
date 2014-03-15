@@ -1,3 +1,5 @@
+hostname: 'dev-site'
+
 dir:
   app: '/home/vagrant/app'
   web: '/home/vagrant/app/web'
