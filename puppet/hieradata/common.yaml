@@ -1,5 +1,8 @@
-app_dir: '/home/vagrant/app'
-web_dir: '/home/vagrant/app/web'
+dir:
+  app: '/home/vagrant/app'
+  web: '/home/vagrant/app/web'
+  cache: '/home/vagrant/cache'
+  log: '/home/vagrant/log'
 
 php:
     install: true
@@ -9,10 +12,6 @@ php:
     start_server: true
     phing: true
     
-app:
-    cache_dir: '/home/vagrant/cache'
-    log_dir: '/home/vagrant/log' 
-
 c_tools:
     gcc: true
     jsonc: false

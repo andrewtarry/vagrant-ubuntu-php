@@ -6,11 +6,10 @@ $nodejs = hiera('nodejs')
 $mysql = hiera('mysql')
 $c_tools = hiera('c_tools')
 $vim = hiera('vim')
-$app_dir = hiera('app_dir')
-$app = hiera('app')
+$dir = hiera('dir')
 
-$log_dir = $app['log_dir']
-$cache_dir = $app['cache_dir']
+$log_dir = $dir['log']
+$cache_dir = $dir['cache']
 
 # Set up update command
 include update
@@ -40,7 +39,7 @@ node 'dev' {
 	}
 
 	class { 'webroot': 
-		dir => [hiera('app_dir'), hiera('web_dir')]
+		dir => [$dir['app'], $dir['web']]
 	}
 
 # 	# PHP
@@ -80,11 +79,11 @@ node 'dev' {
 		class { 'apache': }
 
 		apache::vhost { 'dev-site':
-		   docroot  => hiera('web_dir'),
-		   directory => hiera('web_dir'),
+		   docroot  => $dir['web'],
+		   directory => $dir['web'],
 		   directory_allow_override => 'All',
 		   directory_require => 'all granted',
-		   env_variables => ['CACHE_DIR "${cache_dir}"', 'LOG_DIR "${log_dir}"']
+		   env_variables => ["CACHE_DIR \"${cache_dir}\"", "LOG_DIR \"${log_dir}\""]
 		}
 
 	}
