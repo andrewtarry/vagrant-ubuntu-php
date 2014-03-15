@@ -9,4 +9,4 @@
 	url = https://github.com/maestrodev/puppet-wget.git
 [submodule "puppet/modules/apache"]
 	path = puppet/modules/apache
-	url = https://github.com/andrewtarry/vagrant-ubuntu-php.git
+	url = git@github.com:andrewtarry/puppet-apache.git
