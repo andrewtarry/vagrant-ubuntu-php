@@ -25,7 +25,11 @@ exec { "update_repo":
 node 'dev' {
 
     include curl
-    include bash
+
+    class { 'bash':
+      cache_dir => $cache_dir,
+      log_dir => $log_dir
+    }
 
     class { 'hosts':
       hostname => $webhostname
