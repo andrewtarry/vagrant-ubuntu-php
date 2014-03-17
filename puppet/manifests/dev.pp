@@ -39,7 +39,7 @@ node 'dev' {
 		include gcc
 	}
 
-	if $git['install'] { 
+	if $git['install'] {
 		 include git
 	}
 
@@ -47,7 +47,7 @@ node 'dev' {
 		class { 'vim': }
 	}
 
-	class { 'webroot': 
+	class { 'webroot':
 		dir => [$dir['app'], $dir['web']]
 	}
 
@@ -81,7 +81,11 @@ node 'dev' {
 		class { 'nodejs': }
 
 		nodejs::npm { 'grunt-cli': }
+        nodejs::npm { 'bower': }
 
+        package {'node-less':
+          ensure => installed
+        }
 	}
 
 	if $apache['install'] {
