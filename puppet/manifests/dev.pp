@@ -8,6 +8,7 @@ $c_tools = hiera('c_tools')
 $vim = hiera('vim')
 $dir = hiera('dir')
 $webhostname = hiera('hostname')
+$ruby = hiera('ruby')
 
 $log_dir = $dir['log']
 $cache_dir = $dir['cache']
@@ -116,5 +117,10 @@ node 'dev' {
 	if $c_tools['jsonc'] {
 
 		class { 'jsonc': }
+	}
+
+	if $ruby['install'] {
+		class { 'ruby': }
+
 	}
 }

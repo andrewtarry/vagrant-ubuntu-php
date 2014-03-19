@@ -10,3 +10,6 @@
 [submodule "puppet/modules/apache"]
 	path = puppet/modules/apache
 	url = git@github.com:andrewtarry/puppet-apache.git
+[submodule "puppet/modules/ruby"]
+	path = puppet/modules/ruby
+	url = https://github.com/example42/puppet-ruby.git

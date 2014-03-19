@@ -1,3 +1,4 @@
 .vagrant/*
 app/*
 .idea/*
+puppet/hireadata/common.yaml
