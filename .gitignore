@@ -2,3 +2,4 @@
 app/*
 .idea/*
 puppet/hireadata/common.yaml
+Vagrantfile

@@ -7,7 +7,7 @@ dir:
   log: '/home/vagrant/log'
 
 php:
-    install: true
+    install: false
     version: '5.5'
     dev: true
     libpcre: true
@@ -26,13 +26,13 @@ vim:
     install: true
 
 mysql:
-    install: true
+    install: false
 
 nodejs:
-    install: true
+    install: false
 
 apache:
-    install: true
+    install: false
     docroot: "%{web_dir}"
 
 jsonc:
