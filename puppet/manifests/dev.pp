@@ -9,6 +9,7 @@ $vim = hiera('vim')
 $dir = hiera('dir')
 $webhostname = hiera('hostname')
 $ruby = hiera('ruby')
+$java = hiera('java')
 
 $log_dir = $dir['log']
 $cache_dir = $dir['cache']
@@ -63,10 +64,12 @@ node 'dev' {
           install_dir => '/usr/bin'
         }
 
-        class { 'symfony2':
-        	cache_dir => $cache_dir,
-        	log_dir => $log_dir,
-    	}
+        if $php['symfont2'] {
+	        class { 'symfony2':
+	        	cache_dir => $cache_dir,
+	        	log_dir => $log_dir,
+	    	}
+	    }
 
     	if $php['phing'] {
 	    	php::pear { 'phing':
@@ -85,19 +88,29 @@ node 'dev' {
         nodejs::npm { 'bower': }
 
         package {'node-less':
-          ensure => installed
+          ensure => installed,
+          require => Class['nodejs']
         }
 	}
 
 	if $apache['install'] {
 		class { 'apache': }
 
-		apache::vhost { $webhostname:
-		   docroot  => $dir['web'],
-		   directory => $dir['web'],
-		   directory_allow_override => 'All',
-		   directory_require => 'all granted',
-		   env_variables => ["CACHE_DIR \"${cache_dir}\"", "LOG_DIR \"${log_dir}\""]
+		if $php['symfont2'] {
+			apache::vhost { $webhostname:
+			   docroot  => $dir['web'],
+			   directory => $dir['web'],
+			   directory_allow_override => 'All',
+			   directory_require => 'all granted',
+			   env_variables => ["CACHE_DIR \"${cache_dir}\"", "LOG_DIR \"${log_dir}\""]
+			}
+		}else {
+			apache::vhost { $webhostname:
+			   docroot  => $dir['web'],
+			   directory => $dir['web'],
+			   directory_allow_override => 'All',
+			   directory_require => 'all granted'
+			}
 		}
 
 	}
@@ -121,6 +134,22 @@ node 'dev' {
 
 	if $ruby['install'] {
 		class { 'ruby': }
+
+	}
+
+	if $java['install'] {
+
+		include java
+
+		if $java['jenkins'] {
+			class { 'jenkins':
+				install_java => false
+			}
+
+			jenkins::plugin {
+			  "git" : ;
+			}
+		}
 
 	}
 }

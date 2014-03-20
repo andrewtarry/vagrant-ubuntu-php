@@ -41,3 +41,7 @@ jsonc:
 
 ruby:
     install: true
+
+java:
+    install: true
+    jenkins: true
