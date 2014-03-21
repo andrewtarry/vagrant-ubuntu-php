@@ -8,8 +8,4 @@ By default a site called from dev-site will be listening on `10.0.0.10` so add t
 Installation
 ------------
 
-This VM will work with Vagrant but does need some additional git submodules to make sure you  install them before starting the VM.
-
-	$ git submodule update
-	$ vagrant up
-	
+This VM will work with Vagrant but does need some additional git submodules. To set up the submodules and configuration files run `./init.sh`.
