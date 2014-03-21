@@ -1,10 +1,10 @@
 hostname: 'dev-site'
 
 dir:
-  app: '/var/lib/jenkins/jobs/TAM/workspace'
-  web: '/var/lib/jenkins/jobs/TAM/workspace/web'
-  cache: 'var/lib/jenkins/jobs/TAM/workspace/app/cache'
-  log: '/var/lib/jenkins/jobs/TAM/workspace/app/log'
+  app: '/home/vagrant/app'
+  web: '/home/vagrant/app/web'
+  cache: '/home/vagrant/cache'
+  log: '/home/vagrant/log'
 
 php:
     install: true
@@ -13,6 +13,7 @@ php:
     libpcre: true
     start_server: true
     phing: true
+    symfony2: true
     
 c_tools:
     gcc: true
@@ -36,12 +37,12 @@ apache:
     docroot: "%{web_dir}"
 
 jsonc:
-    dev: true
-    dbg: true
+    dev: false
+    dbg: false
 
 ruby:
-    install: true
+    install: false
 
 java:
-    install: true
-    jenkins: true
+    install: false
+    jenkins: false
