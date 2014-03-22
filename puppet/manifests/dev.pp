@@ -7,7 +7,6 @@ $mysql = hiera('mysql')
 $c_tools = hiera('c_tools')
 $vim = hiera('vim')
 $dir = hiera('dir')
-$webhostname = hiera('hostname')
 $ruby = hiera('ruby')
 $java = hiera('java')
 
@@ -27,6 +26,7 @@ exec { "update_repo":
 node 'dev' {
 
     include curl
+    include unzip
 
     class { 'bash':
       cache_dir => $cache_dir,
@@ -64,7 +64,7 @@ node 'dev' {
           install_dir => '/usr/bin'
         }
 
-        if $php['symfont2'] {
+        if $php['symfony2'] {
 	        class { 'symfony2':
 	        	cache_dir => $cache_dir,
 	        	log_dir => $log_dir,
@@ -96,8 +96,10 @@ node 'dev' {
 	if $apache['install'] {
 		class { 'apache': }
 
-		if $php['symfont2'] {
-			apache::vhost { $webhostname:
+
+		if $php['symfony2'] {
+			apache::vhost { $apache['hostname']:
+				port => $apache['siteport'],
 			   docroot  => $dir['web'],
 			   directory => $dir['web'],
 			   directory_allow_override => 'All',
@@ -105,7 +107,8 @@ node 'dev' {
 			   env_variables => ["CACHE_DIR \"${cache_dir}\"", "LOG_DIR \"${log_dir}\""]
 			}
 		}else {
-			apache::vhost { $webhostname:
+			apache::vhost { $apache['hostname']:
+				port => $apache['siteport'],
 			   docroot  => $dir['web'],
 			   directory => $dir['web'],
 			   directory_allow_override => 'All',
