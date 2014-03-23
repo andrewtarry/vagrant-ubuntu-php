@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+forge "http://forge.puppetlabs.com"
+
+mod 'puppetlabs/apt'
+mod 'puppetlabs/java'
+mod 'rtyler/jenkins'
+mod 'maestrodev/wget'
+
+mod 'mysql',
+	:git => 'https://github.com/example42/puppet-mysql.git'
+
+mod 'ruby',
+	:git => 'https://github.com/example42/puppet-ruby.git'
+
+mod 'vim',
+	:git => 'https://github.com/example42/puppet-vim.git'
+
+mod 'apache',
+	:git => 'https://github.com/andrewtarry/puppet-apache.git'
