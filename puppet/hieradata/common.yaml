@@ -1,3 +1,5 @@
+hostname: 'dev-site'
+
 dir:
   app: '/home/vagrant/app'
   web: '/home/vagrant/app/web'
@@ -9,9 +11,9 @@ php:
     version: '5.5'
     dev: true
     libpcre: true
-    start_server: false
-    phing: false
-    symfony2: true
+    start_server: true
+    phing: true
+    symfony2: false
     
 c_tools:
     gcc: true
@@ -33,16 +35,14 @@ nodejs:
 apache:
     install: true
     docroot: "%{web_dir}"
-    hostname: 'site.dev'
-    siteport: 8000
 
 jsonc:
     dev: true
-    dbg: false
+    dbg: true
 
 ruby:
-    install: false
+    install: true
 
 java:
-    install: false
-    jenkins: false
+    install: true
+    jenkins: true
