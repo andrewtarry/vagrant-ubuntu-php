@@ -1,5 +1,3 @@
-hostname: 'dev-site'
-
 dir:
   app: '/home/vagrant/app'
   web: '/home/vagrant/app/web'
@@ -35,6 +33,7 @@ nodejs:
 apache:
     install: true
     docroot: "%{web_dir}"
+    hostname: 'site.dev'
 
 jsonc:
     dev: true
