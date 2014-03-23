@@ -28,14 +28,16 @@ node 'dev' {
     include curl
     include unzip
 
-    class { 'bash':
-      cache_dir => $cache_dir,
-      log_dir => $log_dir
-    }
+    # Set up the bash commands in the profile.
+    #
+    # There are no custom options as this command will only load the config file
+    class { 'bash': }
 
+    # Set up the hosts config
     class { 'hosts':
       hostname => $webhostname
     }
+
 
 	if $c_tools['gcc'] {
 		include gcc
@@ -53,11 +55,12 @@ node 'dev' {
 		dir => [$dir['app'], $dir['web']]
 	}
 
-# 	# PHP
-
 	if $php['install'] {
+
+		# Install php
 		class { 'php': }
 
+		# Install phpmyadmin
 		class { 'phpmyadmin': }
 
         class { 'composer':
@@ -100,19 +103,19 @@ node 'dev' {
 		if $php['symfony2'] {
 			apache::vhost { $apache['hostname']:
 				port => $apache['siteport'],
-			   docroot  => $dir['web'],
-			   directory => $dir['web'],
-			   directory_allow_override => 'All',
-			   directory_require => 'all granted',
-			   env_variables => ["CACHE_DIR \"${cache_dir}\"", "LOG_DIR \"${log_dir}\""]
+			    docroot  => $dir['web'],
+			    directory => $dir['web'],
+			    directory_allow_override => 'All',
+			    directory_require => 'all granted',
+			    env_variables => ["CACHE_DIR \"${cache_dir}\"", "LOG_DIR \"${log_dir}\""]
 			}
 		}else {
 			apache::vhost { $apache['hostname']:
 				port => $apache['siteport'],
-			   docroot  => $dir['web'],
-			   directory => $dir['web'],
-			   directory_allow_override => 'All',
-			   directory_require => 'all granted'
+			    docroot  => $dir['web'],
+			    directory => $dir['web'],
+			    directory_allow_override => 'All',
+			    directory_require => 'all granted'
 			}
 		}
 

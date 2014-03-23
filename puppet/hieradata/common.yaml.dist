@@ -41,8 +41,8 @@ jsonc:
     dbg: true
 
 ruby:
-    install: true
+    install: false
 
 java:
-    install: true
-    jenkins: true
+    install: false
+    jenkins: false
