@@ -1,5 +1,4 @@
 .vagrant/*
 app/*
 .idea/*
-puppet/hieradata/common.yaml
 Vagrantfile

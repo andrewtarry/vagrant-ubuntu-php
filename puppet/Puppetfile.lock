@@ -18,7 +18,7 @@ FORGE
 GIT
   remote: https://github.com/andrewtarry/puppet-apache.git
   ref: master
-  sha: cacccd3a93c4412da4e524c24b5b78225c156366
+  sha: 014a8755aa1a4750398d827b8b865750611384a3
   specs:
     apache (2.1.5)
       example42/puppi (>= 2.0.0)
