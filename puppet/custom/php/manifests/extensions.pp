@@ -1,5 +1,10 @@
 class php::extensions {
 
+	package { "php5-dev":
+		require => [Exec['update_repo'],Class['php::install']],
+		ensure => installed,
+	}
+
 	package { "php5-json":
 		require => [Exec['update_repo'], Class['php::install']],
 		ensure => installed,

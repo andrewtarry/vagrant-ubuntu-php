@@ -12,7 +12,8 @@ class phpmyadmin::install {
 	exec { "extract": 
 		command => "tar -zxvf /tmp/phpmyadmin.tar -C /home/vagrant/phpmyadmin --strip=1",
 		path => '/usr/bin:/bin',
-		require => [File['/tmp/phpmyadmin.tar'], File['/home/vagrant/phpmyadmin']]
+		require => [File['/tmp/phpmyadmin.tar'], File['/home/vagrant/phpmyadmin']],
+		creates => '/home/vagrant/phpmyadmin/index.php'
 	}
 
 	file { "/home/vagrant/phpmyadmin/config.inc.php": 

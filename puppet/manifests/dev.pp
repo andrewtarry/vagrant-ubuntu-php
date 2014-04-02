@@ -9,6 +9,7 @@ $vim = hiera('vim')
 $dir = hiera('dir')
 $ruby = hiera('ruby')
 $java = hiera('java')
+$mongodb = hiera('mongodb')
 
 $log_dir = $dir['log']
 $cache_dir = $dir['cache']
@@ -79,6 +80,10 @@ node 'dev' {
 	    		app => "phing/phing",
 	    		channel => "pear.phing.info"
 	    	}
+	    }
+
+	    if $mongodb['install'] {
+	    	php::pecl { 'mongo': }
 	    }
 
 	}
@@ -156,6 +161,9 @@ node 'dev' {
 			  "git" : ;
 			}
 		}
-
 	}
-}
+
+	if $mongodb['install'] {
+		include '::mongodb::server'
+	}
+}	
