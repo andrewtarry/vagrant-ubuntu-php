@@ -12,6 +12,8 @@ php:
     start_server: true
     phing: true
     symfony2: false
+    pecl_extensions:
+       - mongo
     
 c_tools:
     gcc: true
@@ -45,3 +47,6 @@ ruby:
 java:
     install: false
     jenkins: false
+
+mongodb:
+    install: true
