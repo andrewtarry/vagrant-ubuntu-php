@@ -1920,8 +1920,10 @@ ldap.max_links = -1
 
 extension = mysqli.so
 
+<% if @extensions -%>
 <% @extensions.each do |ext| -%>
 extension = <%= ext %>.so
+<% end -%>
 <% end -%>
 
 ; Local Variables:

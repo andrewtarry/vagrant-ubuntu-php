@@ -1918,8 +1918,10 @@ ldap.max_links = -1
 ; absolute path.
 ;curl.cainfo =
 
+<% if @extensions -%>
 <% @extensions.each do |ext| -%>
 extension = <%= ext %>.so
+<% end -%>
 <% end -%>
 
 ; Local Variables:
