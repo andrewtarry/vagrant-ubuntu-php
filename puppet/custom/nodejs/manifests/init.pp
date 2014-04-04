@@ -1,4 +1,4 @@
 class nodejs {
 
-	include nodejs::latest, nodejs::install
+	include nodejs::latest, nodejs::install, nodejs::ubuntu
 }
