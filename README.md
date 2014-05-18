@@ -1,7 +1,7 @@
 Ubuntu with PHP 5.5
 ===================
 
-This Vagrant VM uses Ubuntu 13.10 Server with PHP 5.5 installed. All of the options are managed via the `puppet/hieradata/common.yaml`. 
+This Vagrant VM uses Ubuntu 14.04 Server with PHP 5.5 installed. All of the options are managed via hiera the `puppet/hieradata` directory. 
 
 By default a site will be listening on `10.0.0.10:8000`. The document root by default is in `app/web` so the site will work straight away.
 
