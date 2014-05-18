@@ -1,9 +1,11 @@
 dir:
   app: '/home/vagrant/app'
-  web: '/home/vagrant/app'
+  web: '/home/vagrant/app/web'
+  cache: '/home/vagrant/cache'
+  log: '/home/vagrant/log'
 
 php:
-    install: false
+    install: true
     version: '5.5'
     dev: true
     libpcre: true
@@ -15,7 +17,7 @@ c_tools:
     re2c: false
 
 git:
-    install: false
+    install: true
 
 vim:
     install: true
@@ -32,8 +34,8 @@ apache:
     hostname: 'site.dev'
 
 jsonc:
-    dev: true
-    dbg: true
+    dev: false
+    dbg: false
 
 ruby:
     install: false

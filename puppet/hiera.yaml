@@ -3,4 +3,5 @@
 :yaml:
   :datadir: /vagrant/puppet/hieradata
 :hierarchy:
+  - "%{::clientcert}"
   - common

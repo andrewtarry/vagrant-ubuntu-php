@@ -75,12 +75,6 @@ node 'dev' {
 	    	}
 	    }
 
-    	if $php['phing'] {
-	    	php::pear { 'phing':
-	    		app => "phing/phing",
-	    		channel => "pear.phing.info"
-	    	}
-	    }
 
 	    if $mongodb['install'] {
 	    	php::pecl { 'mongo': }
