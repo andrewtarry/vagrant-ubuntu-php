@@ -3,6 +3,7 @@ FORGE
   specs:
     darin/zypprepo (1.0.1)
     example42/puppi (2.1.9)
+    forward3ddev/r (0.0.1)
     maestrodev/wget (1.4.1)
     puppetlabs/apt (1.4.2)
       puppetlabs/stdlib (>= 2.2.1)
@@ -53,6 +54,7 @@ GIT
 
 DEPENDENCIES
   apache (>= 0)
+  forward3ddev/r (>= 0)
   maestrodev/wget (>= 0)
   mysql (>= 0)
   puppetlabs/apt (>= 0)

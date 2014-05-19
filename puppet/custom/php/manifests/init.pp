@@ -1,5 +1,9 @@
 class php {
 
-	include python, php::params, php::latest, php::install, php::curl, php::ini, php::pear_install, php::extensions
+	if !defined(Class['python']) {
+		include python
+	}
+
+	include php::params, php::latest, php::install, php::curl, php::ini, php::pear_install, php::extensions
 
 }

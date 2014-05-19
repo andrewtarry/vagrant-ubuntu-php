@@ -8,7 +8,7 @@ php:
     dev: true
     libpcre: true
     symfony2: false
-    
+
 c_tools:
     gcc: true
     jsonc: false
@@ -21,19 +21,13 @@ vim:
     install: true
 
 mysql:
-    install: true
+    install: false
 
 nodejs:
-    install: true
+    install: false
 
 apache:
-    install: true
-    docroot: "%{web_dir}"
-    hostname: 'site.dev'
-
-jsonc:
-    dev: true
-    dbg: true
+    install: false
 
 ruby:
     install: false
@@ -43,4 +37,7 @@ java:
     jenkins: false
 
 mongodb:
-    install: true
+    install: false
+
+r:
+    install: false

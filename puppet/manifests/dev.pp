@@ -10,6 +10,7 @@ $dir = hiera('dir')
 $ruby = hiera('ruby')
 $java = hiera('java')
 $mongodb = hiera('mongodb')
+$r = hiera('r')
 
 $log_dir = $dir['log']
 $cache_dir = $dir['cache']
@@ -24,7 +25,7 @@ exec { "update_repo":
 }
 
 # Dev node
-node 'dev' {
+node 'default' {
 
     include curl
     include unzip
@@ -52,8 +53,14 @@ node 'dev' {
 		class { 'vim': }
 	}
 
-	class { 'webroot':
-		dir => [$dir['app'], $dir['web']]
+	if $dir['app'] == $dir['web'] {
+		class { 'webroot':
+			dir => $dir['app']
+		}
+	}else{
+		class { 'webroot':
+			dir => [$dir['app'], $dir['web']]
+		}
 	}
 
 	if $php['install'] {
@@ -159,5 +166,9 @@ node 'dev' {
 
 	if $mongodb['install'] {
 		include '::mongodb::server'
+	}
+
+	if $r['install'] {
+		include r
 	}
 }	
