@@ -4,7 +4,6 @@
 forge "http://forge.puppetlabs.com"
 
 mod 'puppetlabs/apt'
-mod 'puppetlabs/java'
 mod 'puppetlabs/mongodb'
 mod 'rtyler/jenkins'
 mod 'maestrodev/wget'

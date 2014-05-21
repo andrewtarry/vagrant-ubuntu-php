@@ -5,15 +5,13 @@ dir:
   log: '/home/vagrant/log'
 
 php:
-    install: true
+    install: false
     version: '5.5'
     dev: true
     libpcre: true
     start_server: true
     phing: true
     symfony2: false
-    pecl_extensions:
-       - mongo
     
 c_tools:
     gcc: true
@@ -27,19 +25,15 @@ vim:
     install: true
 
 mysql:
-    install: true
+    install: false
 
 nodejs:
-    install: true
+    install: false
 
 apache:
-    install: true
+    install: false
     docroot: "%{web_dir}"
     hostname: 'site.dev'
-
-jsonc:
-    dev: true
-    dbg: true
 
 ruby:
     install: false
@@ -49,4 +43,7 @@ java:
     jenkins: false
 
 mongodb:
-    install: true
+    install: false
+
+r:
+    install: false

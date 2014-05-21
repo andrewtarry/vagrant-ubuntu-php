@@ -1,14 +1,18 @@
 dir:
   app: '/home/vagrant/app'
-  web: '/home/vagrant/app'
+  web: '/home/vagrant/app/web'
+  cache: '/home/vagrant/cache'
+  log: '/home/vagrant/log'
 
 php:
     install: false
     version: '5.5'
     dev: true
     libpcre: true
+    start_server: true
+    phing: true
     symfony2: false
-
+    
 c_tools:
     gcc: true
     jsonc: false
@@ -28,6 +32,8 @@ nodejs:
 
 apache:
     install: false
+    docroot: "%{web_dir}"
+    hostname: 'site.dev'
 
 ruby:
     install: false

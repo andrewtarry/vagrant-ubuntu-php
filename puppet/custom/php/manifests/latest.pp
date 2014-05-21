@@ -2,7 +2,9 @@ class php::latest {
 
 	case $operatingsystem {
 		/(Ubuntu|Debian)/: {
-			include apt
+			if !defined(Class['apt']) {
+				include apt
+			}
 
 			apt::ppa { 'ppa:ondrej/php5': }
 		}
