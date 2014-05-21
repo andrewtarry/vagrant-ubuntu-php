@@ -3,17 +3,16 @@ FORGE
   specs:
     darin/zypprepo (1.0.1)
     example42/puppi (2.1.9)
-    forward3ddev/r (0.0.1)
     maestrodev/wget (1.4.1)
     puppetlabs/apt (1.4.2)
       puppetlabs/stdlib (>= 2.2.1)
-    puppetlabs/java (1.1.0)
+    puppetlabs/java (1.1.1)
       puppetlabs/stdlib (>= 0.1.6)
     puppetlabs/mongodb (0.7.0)
       puppetlabs/apt (>= 1.0.0)
       puppetlabs/stdlib (>= 2.2.0)
-    puppetlabs/stdlib (4.1.0)
-    rtyler/jenkins (1.0.1)
+    puppetlabs/stdlib (4.2.1)
+    rtyler/jenkins (1.1.0)
       darin/zypprepo (>= 1.0.1)
       puppetlabs/apt (>= 0.0.3)
       puppetlabs/java (>= 1.0.1)
@@ -30,7 +29,7 @@ GIT
 GIT
   remote: https://github.com/example42/puppet-mysql.git
   ref: master
-  sha: b2d5fbc55452ee51abe50cee0405de0b7103d838
+  sha: a894aef960b2a56dc4b68418d62d24ac22d5161a
   specs:
     mysql (2.1.3)
       example42/puppi (>= 2.0.0)
@@ -47,18 +46,16 @@ GIT
 GIT
   remote: https://github.com/example42/puppet-vim.git
   ref: master
-  sha: dd3eda16d11efffc33072a0f4541ee08607f068e
+  sha: 4870e04deb16872f20c6d8e8cf98b96eb4b1ad0b
   specs:
     vim (2.0.12)
       example42/puppi (>= 2.0.0)
 
 DEPENDENCIES
   apache (>= 0)
-  forward3ddev/r (>= 0)
   maestrodev/wget (>= 0)
   mysql (>= 0)
   puppetlabs/apt (>= 0)
-  puppetlabs/java (>= 0)
   puppetlabs/mongodb (>= 0)
   rtyler/jenkins (>= 0)
   ruby (>= 0)
