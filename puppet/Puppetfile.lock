@@ -23,7 +23,7 @@ GIT
   ref: master
   sha: 014a8755aa1a4750398d827b8b865750611384a3
   specs:
-    apache (2.1.5)
+    example42/apache (2.1.5)
       example42/puppi (>= 2.0.0)
 
 GIT
@@ -31,7 +31,7 @@ GIT
   ref: master
   sha: a894aef960b2a56dc4b68418d62d24ac22d5161a
   specs:
-    mysql (2.1.3)
+    example42/mysql (2.1.3)
       example42/puppi (>= 2.0.0)
       puppetlabs/stdlib (>= 2.0.0)
 
@@ -40,7 +40,7 @@ GIT
   ref: master
   sha: 224c54fa5216892a5ed198c10786d6c948dc026c
   specs:
-    ruby (2.0.13)
+    example42/ruby (2.0.13)
       example42/puppi (>= 2.0.0)
 
 GIT
@@ -48,16 +48,16 @@ GIT
   ref: master
   sha: 4870e04deb16872f20c6d8e8cf98b96eb4b1ad0b
   specs:
-    vim (2.0.12)
+    example42/vim (2.0.12)
       example42/puppi (>= 2.0.0)
 
 DEPENDENCIES
-  apache (>= 0)
+  example42/apache (>= 0)
+  example42/mysql (>= 0)
+  example42/ruby (>= 0)
+  example42/vim (>= 0)
   maestrodev/wget (>= 0)
-  mysql (>= 0)
   puppetlabs/apt (>= 0)
   puppetlabs/mongodb (>= 0)
   rtyler/jenkins (>= 0)
-  ruby (>= 0)
-  vim (>= 0)
 
