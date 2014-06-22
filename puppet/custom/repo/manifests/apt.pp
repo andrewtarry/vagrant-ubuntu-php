@@ -14,6 +14,4 @@ class repo::apt {
   # PHP 5.5 with zend engine
   apt::ppa { 'ppa:ondrej/php5': }
 
-  # Node JS
-  #  apt::ppa { 'ppa:chris-lea/node.js': }
 }

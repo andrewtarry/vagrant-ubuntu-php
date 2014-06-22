@@ -5,7 +5,6 @@ $apache = hiera('apache')
 $nodejs = hiera('nodejs')
 $mysql = hiera('mysql')
 $c_tools = hiera('c_tools')
-$vim = hiera('vim')
 $dir = hiera('dir')
 $ruby = hiera('ruby')
 $java = hiera('java')
@@ -41,6 +40,8 @@ node 'default' {
 
     include curl
     include unzip
+    include vim
+    include git
 
     # Set up the bash commands in the profile.
     #
@@ -59,10 +60,6 @@ node 'default' {
 
 	if $git['install'] {
 		 include git
-	}
-
-	if $vim['install'] {
-		class { 'vim': }
 	}
 
 	if $dir['app'] == $dir['web'] {
