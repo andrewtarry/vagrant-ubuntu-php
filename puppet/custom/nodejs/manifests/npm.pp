@@ -4,7 +4,7 @@ define nodejs::npm() {
 		command => "npm install -g ${title}",
 		path => "/usr/bin",
 		creates => "/usr/local/bin/${title}",
-		require => Class["nodejs::install"]
+		require => [Class["nodejs::install"], Class["nodejs::ubuntu"]]
 	}
 
 }

@@ -1,9 +1,8 @@
-class php {
+class php (
+  $version = $php::params::version
+) inherits php::params
+{
 
-	if !defined(Class['python']) {
-		include python
-	}
-
-	include php::params, php::latest, php::install, php::curl, php::ini, php::pear_install, php::extensions
+	include php::install, php::curl, php::ini, php::pear_install, php::extensions
 
 }

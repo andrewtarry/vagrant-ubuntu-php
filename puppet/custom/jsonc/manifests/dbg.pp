@@ -4,7 +4,7 @@ class jsonc::dbg {
 
 		package{ "libjson0-dbg":
 			ensure => installed,
-			require => [Exec['update_repo'], Class['jsonc::install']],
+			require =>  Class['jsonc::install'],
 		}
 
 	}

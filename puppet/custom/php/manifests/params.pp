@@ -1,11 +1,7 @@
 class php::params {
-	case $operatingsystem {
-		Centos: {
-			$php55_package = 'php'
-		}
-		/(Ubuntu|Debian)/: {
-			$php55_package = 'php5'
-		}
-	}
+
+  $php55_package = 'php5'
+  $hhvm_package = 'hhvm'
+  $version = '5.5'
 
 }

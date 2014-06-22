@@ -15,17 +15,29 @@ $r = hiera('r')
 $log_dir = $dir['log']
 $cache_dir = $dir['cache']
 
-# Set up update command
-include update
-
-exec { "update_repo":
-     command => $update::params::cmd,
-     path => "/usr/bin:/usr/sbin:/bin",
-     onlyif => "test -f /usr/bin/apt-get"
-}
-
 # Dev node
 node 'default' {
+
+    # Set up the apt repos in a stage before the main puppet run 
+    stage { 'repos': 
+      before => Stage['main']
+    }
+
+    class { 'apt':
+      stage => repos,
+      always_apt_update => false
+    }
+
+    class { 'repo':
+      stage => repos
+    }
+
+    class { 'python':
+      stage => repos
+    }
+
+
+    # Main Stage
 
     include curl
     include unzip

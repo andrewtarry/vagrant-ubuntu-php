@@ -4,7 +4,7 @@ class jsonc::dev {
 
 		package{ "libjson0-dev":
 			ensure => installed,
-			require => [Exec['update_repo'], Class['jsonc::install']],
+			require => Class['jsonc::install'],
 		}
 
 	}

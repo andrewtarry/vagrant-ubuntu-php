@@ -1,7 +1,7 @@
 class php::pear_install {
 
 	package { "php-pear":
-		require => [Exec['update_repo'], Class['php::install']],
+		require =>  Class['php::install'],
 		ensure => installed,
 	}
 
