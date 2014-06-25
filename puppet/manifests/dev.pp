@@ -74,15 +74,7 @@ node 'default' {
 
 	if $php['install'] {
 
-		# Install php
-		class { 'php': }
-
-		# Install phpmyadmin
-		class { 'phpmyadmin': }
-
-    class { 'composer':
-       install_dir => '/usr/bin'
-    }
+   include php, hhvm, phpmyadmin, composer
 
    if $php['symfony2'] {
 	    class { 'symfony2':
