@@ -5,7 +5,6 @@ $apache = hiera('apache')
 $nodejs = hiera('nodejs')
 $mysql = hiera('mysql')
 $c_tools = hiera('c_tools')
-$vim = hiera('vim')
 $dir = hiera('dir')
 $ruby = hiera('ruby')
 $java = hiera('java')
@@ -41,6 +40,8 @@ node 'default' {
 
     include curl
     include unzip
+    include vim
+    include git
 
     # Set up the bash commands in the profile.
     #
@@ -61,10 +62,6 @@ node 'default' {
 		 include git
 	}
 
-	if $vim['install'] {
-		class { 'vim': }
-	}
-
 	if $dir['app'] == $dir['web'] {
 		class { 'webroot':
 			dir => $dir['app']
@@ -77,26 +74,18 @@ node 'default' {
 
 	if $php['install'] {
 
-		# Install php
-		class { 'php': }
+   include php, hhvm, phpmyadmin, composer
 
-		# Install phpmyadmin
-		class { 'phpmyadmin': }
-
-        class { 'composer':
-          install_dir => '/usr/bin'
-        }
-
-        if $php['symfony2'] {
-	        class { 'symfony2':
-	        	cache_dir => $cache_dir,
-	        	log_dir => $log_dir,
+   if $php['symfony2'] {
+	    class { 'symfony2':
+	      	cache_dir => $cache_dir,
+	       	log_dir => $log_dir,
 	    	}
 	    }
 
 
 	    if $mongodb['install'] {
-	    	php::pecl { 'mongo': }
+        #	    	php::pecl { 'mongo': }
 	    }
 
 	}
@@ -114,9 +103,7 @@ node 'default' {
         }
 	}
 
-	if $apache['install'] {
 		class { 'apache': }
-
 
 		if $php['symfony2'] {
 			apache::vhost { $apache['hostname']:
@@ -137,7 +124,6 @@ node 'default' {
 			}
 		}
 
-	}
 
 	if $mysql['install'] {
 		class { 'mysql': }
