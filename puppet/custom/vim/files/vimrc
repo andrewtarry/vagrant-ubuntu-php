@@ -1,3 +1,25 @@
+set nocompatible
 execute pathogen#infect()
-syntax on
+
+syntax enable
+
+set background=light
+colorscheme solarized
+
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set ruler
+set ignorecase
+set hlsearch
+set noerrorbells
+set novisualbell
+set number
+set cursorline
+
 filetype plugin indent on
+
+autocmd vimenter * if !argc() | NERDTree | endif
+
+let g:vim_markdown_folding_disabled=1

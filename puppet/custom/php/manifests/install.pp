@@ -8,4 +8,8 @@ class php::install {
 
 	}
 
+  apache::module { 'php5':
+    install_package => true
+  }
+
 }

@@ -80,20 +80,20 @@ node 'default' {
 		# Install phpmyadmin
 		class { 'phpmyadmin': }
 
-        class { 'composer':
-          install_dir => '/usr/bin'
-        }
+    class { 'composer':
+       install_dir => '/usr/bin'
+    }
 
-        if $php['symfony2'] {
-	        class { 'symfony2':
-	        	cache_dir => $cache_dir,
-	        	log_dir => $log_dir,
+   if $php['symfony2'] {
+	    class { 'symfony2':
+	      	cache_dir => $cache_dir,
+	       	log_dir => $log_dir,
 	    	}
 	    }
 
 
 	    if $mongodb['install'] {
-	    	php::pecl { 'mongo': }
+        #	    	php::pecl { 'mongo': }
 	    }
 
 	}
@@ -111,9 +111,7 @@ node 'default' {
         }
 	}
 
-	if $apache['install'] {
 		class { 'apache': }
-
 
 		if $php['symfony2'] {
 			apache::vhost { $apache['hostname']:
@@ -134,7 +132,6 @@ node 'default' {
 			}
 		}
 
-	}
 
 	if $mysql['install'] {
 		class { 'mysql': }
