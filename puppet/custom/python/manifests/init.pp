@@ -1,5 +1,5 @@
 class python {
 
-	include python::software-properties
+	include python::software-properties, python::fontpatcher
 
 }
