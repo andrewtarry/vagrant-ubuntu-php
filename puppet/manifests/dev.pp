@@ -46,7 +46,7 @@ node 'default' {
     # Set up the bash commands in the profile.
     #
     # There are no custom options as this command will only load the config file
-    class { 'bash': }
+    include bash
 
     # Set up the hosts config
     class { 'hosts':
