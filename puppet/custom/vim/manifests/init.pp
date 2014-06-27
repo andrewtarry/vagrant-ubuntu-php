@@ -38,4 +38,8 @@ class vim {
   vim::plugin { 'markdown':
     repo => 'https://github.com/plasticboy/vim-markdown.git'
   }
+  
+  vim::plugin { 'airline':
+    repo => 'https://github.com/bling/vim-airline' 
+  }
 }
