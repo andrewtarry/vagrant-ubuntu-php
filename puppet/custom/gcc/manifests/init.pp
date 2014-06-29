@@ -1,5 +1,5 @@
 class gcc {
 
-	include gcc::install
+  include gcc::install
 
 }

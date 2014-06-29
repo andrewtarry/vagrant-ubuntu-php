@@ -1,11 +1,11 @@
 class nodejs::install {
 
-    package { 'nodejs':
-        ensure => installed
+  package { 'nodejs':
+    ensure => $nodejs::version
     } ->
 
     package { "npm":
-        ensure => installed
-     }
+      ensure => installed
+    }
 }
 

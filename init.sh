@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ ! -d app ]; then
-	mkdir app
+if [ ! -d project ]; then
+	mkdir project
 fi
 cp Vagrantfile.dist Vagrantfile
-cp puppet/hieradata/common.yaml.dist puppet/hieradata/common.yaml
+cp common.yaml.dist common.yaml
 cd puppet
 echo -ne 'installing puppet modules...'
-librarian-puppet install
+librarian-puppet update
 echo "done"

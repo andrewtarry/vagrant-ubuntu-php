@@ -1,6 +1,7 @@
 server {
     server_name <%= @host %>;
     root <%= @docroot %>;
+    listen <%= @port %>;
 
      location / {
           # try to serve file directly, fallback to app.php

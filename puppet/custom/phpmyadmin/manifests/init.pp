@@ -1,4 +1,7 @@
-class phpmyadmin {
+class phpmyadmin ($webserver = 'false') {
 
-	include phpmyadmin::install, phpmyadmin::vhost
+  # Only install phpmyadmin if there also a webserver
+  if $webserver {
+    include phpmyadmin::install, phpmyadmin::vhost
+  }
 }

@@ -1,9 +1,9 @@
 class gcc::install {
 
-	include make
+  include make
 
-	package{"gcc":
-		ensure => installed
-	}
+  package{"gcc":
+    ensure => installed
+  }
 
 }

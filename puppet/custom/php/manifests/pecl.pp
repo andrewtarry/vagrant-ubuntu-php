@@ -1,6 +1,6 @@
 define php::pecl () {
 
-	exec { "pecl-install":
+	exec { "pecl-install ${title}":
 		command => "pecl install ${title}",
 		path => "/usr/bin:/bin",
 		require => Class["php::install"],

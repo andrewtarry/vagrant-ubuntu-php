@@ -1,189 +1,166 @@
-# Load hiera variables
-$git = hiera('git')
-$php = hiera('php')
-$nodejs = hiera('nodejs')
-$mysql = hiera('mysql')
-$c_tools = hiera('c_tools')
-$dir = hiera('dir')
-$ruby = hiera('ruby')
-$java = hiera('java')
-$mongodb = hiera('mongodb')
-$r = hiera('r')
-$http = hiera('http')
+$application = hiera('application')
+$languages = hiera('languages')
+$tools = hiera('tools')
+$webserver_type = $tools['webserver']['type']
 
-$log_dir = $dir['log']
-$cache_dir = $dir['cache']
-
-# Dev node
 node 'default' {
 
-    # Set up the apt repos in a stage before the main puppet run 
-    stage { 'repos': 
-      before => Stage['main']
-    }
+  ##################################################
+  #
+  # Repo Stage
+  #
+  #################################################
 
-    class { 'apt':
-      stage => repos,
-      always_apt_update => false
-    }
+  # Set up the apt repos in a stage before the main puppet run 
 
-    class { 'repo':
-      stage => repos
-    }
+  stage { 'repos': 
+  before => Stage['main']
+  }
 
-    class { 'python':
-      stage => repos
-    }
+  class { 'apt':
+    stage => repos,
+    always_apt_update => false
+  }
 
+  class { 'repo':
+    stage => repos
+  }
 
-    # Main Stage
+  class { 'python':
+    stage => repos
+  }
 
-    include curl
-    include unzip
-    include vim
-    include git
-
-    # Set up the bash commands in the profile.
-    #
-    # There are no custom options as this command will only load the config file
-    include bash
-
-    # Set up the hosts config
-    class { 'hosts':
-      hostname => $webhostname
-    }
+  ##############################################
+  #
+  # Main Stage
+  #
+  ##############################################
 
 
-	if $c_tools['gcc'] {
-		include gcc
-	}
+  ########################
+  # Always install classes
+  ########################
 
-	if $git['install'] {
-		 include git
-	}
+  class { 'curl': }
+  class { 'unzip': }
+  class { 'git': }
 
-	if $dir['app'] == $dir['web'] {
-		class { 'webroot':
-			dir => $dir['app']
-		}
-	}else{
-		class { 'webroot':
-			dir => [$dir['app'], $dir['web']]
-		}
-	}
-
-	if $php['install'] {
-
-   include php, hhvm, phpmyadmin, composer
-
-   if $php['symfony2'] {
-	    class { 'symfony2':
-	      	cache_dir => $cache_dir,
-	       	log_dir => $log_dir,
-	    	}
-	    }
+  #
+  # Install vim and all the plugins
+  #
+  class { 'vim': }
 
 
-	    if $mongodb['install'] {
-        #	    	php::pecl { 'mongo': }
-	    }
+  # Set up the bash commands in the profile.
+  #
+  # There are no custom options as this command will only load the config file
+  class { 'bash':
+    cache_dir => $application['cache_dir']
+  }
 
-	}
-
-	if $nodejs['install'] {
-
-		class { 'nodejs': }
-
-		nodejs::npm { 'grunt-cli': }
-        nodejs::npm { 'bower': }
-
-        package {'node-less':
-          ensure => installed,
-          require => Class['nodejs']
-        }
-	}
-
-  if $http['install'] {
-
-    if $http['type'] == 'apache' {
-
-    include apache
-
-		if $php['symfony2'] {
-			apache::vhost { $apache['hostname']:
-				port => $apache['siteport'],
-			    docroot  => $dir['web'],
-			    directory => $dir['web'],
-			    directory_allow_override => 'All',
-			    directory_require => 'all granted',
-			    env_variables => ["CACHE_DIR \"${cache_dir}\"", "LOG_DIR \"${log_dir}\""]
-			}
-		}else {
-			apache::vhost { $apache['hostname']:
-				port => $apache['siteport'],
-			    docroot  => $dir['web'],
-			    directory => $dir['web'],
-			    directory_allow_override => 'All',
-			    directory_require => 'all granted'
-			}
-		}
-    }
-
-    if $http['type'] == 'nginx' {
-
-      include nginx
-
-      nginx::symfony { $http['hostname']:
-        docroot => $dir['web'],
-        host => $http['hostname']
-      }
-
-    }
+  # Host file configuration
+  class { 'hosts':
+    hostname => $application['server_name']
   }
 
 
-	if $mysql['install'] {
-		class { 'mysql': }
-	}
 
-	if $c_tools['re2c'] {
+  ###########################
+  # Webserer
+  ##########################
+  if $webserver_type {
 
-		package{ 're2c':
-			ensure => installed,
-			require => Exec['update_repo'],
-		}
-	}
+    if $webserver_type == 'apache' {
+      class {'apache': }
 
-	if $c_tools['jsonc'] {
+      apache::vhost { $application['server_name']:
+        port => $application['port'],
+        docroot  => $application['web_root'],
+        directory => $application['web_root'],
+        directory_allow_override => 'All',
+        directory_require => 'all granted'
+      }
+    }elsif $webserver_type == 'nginx'{
+      class {'nginx': }
 
-		class { 'jsonc': }
-	}
+      nginx::symfony { $application['server_name']:
+        host => $application['server_name'],
+        docroot => $application['web_root'],
+        port => $application['port'],
+        phpport => $languages['php']['socket']
+      }
 
-	if $ruby['install'] {
-		class { 'ruby': }
+    }
 
-	}
+  }
 
-	if $java['install'] {
+  ###########################
+  # php
+  ##########################
+  $php_version = $languages['php']['version']
+  if $php_version != false {
 
-		include java
+    class { 'php':
+      version => $php_version
+    }
 
-		if $java['jenkins'] {
-			class { 'jenkins':
-				install_java => false
-			}
+    if $tools['composer'] {
+      class { 'composer': }
+    }
 
-			jenkins::plugin {
-			  "git" : ;
-			}
-		}
-	}
+    if $tools['phpmyadmin'] {
+      class { 'phpmyadmin': 
+      webserver => $webserver_type
+      }
+    }
 
-	if $mongodb['install'] {
-		include '::mongodb::server'
-	}
+    if $php_version == 'hhvm' {
+      class { 'hhvm': }
+    }
+  }
 
-	if $r['install'] {
-		include r
-	}
-}	
+  #########################
+  # nodejs
+  ########################
+  $nodejs_version = $languages['nodejs']['version']
+  if $nodejs_version != false {
+
+    class { 'nodejs': 
+    version => $nodejs_version
+    }
+
+    if $tools['grunt'] {
+      nodejs::npm { 'grunt-cli': }
+    }
+
+    if $tools['bower'] {
+      nodejs::npm { 'bower': }
+    }
+
+  }
+
+
+  #######################
+  # Tools and libraries
+  ######################
+  if $tools['mysql'] {
+    class { 'mysql': }
+  }
+
+
+  if $tools['jsonc'] {
+    class { 'jsonc': }
+  }
+
+  if $languages['java'] {
+    class {'java': }
+  }
+
+  if $languages['r'] {
+    class {'r': }
+  }
+
+  if $tools['gcc'] {
+    include gcc
+  }
+  }	
