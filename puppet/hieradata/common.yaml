@@ -30,10 +30,11 @@ mysql:
 nodejs:
     install: false
 
-apache:
+http:
     install: false
     docroot: "%{web_dir}"
     hostname: 'site.dev'
+    type: 'nginx'
 
 ruby:
     install: false

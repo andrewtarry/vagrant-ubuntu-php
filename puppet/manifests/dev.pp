@@ -1,7 +1,6 @@
 # Load hiera variables
 $git = hiera('git')
 $php = hiera('php')
-$apache = hiera('apache')
 $nodejs = hiera('nodejs')
 $mysql = hiera('mysql')
 $c_tools = hiera('c_tools')
@@ -10,6 +9,7 @@ $ruby = hiera('ruby')
 $java = hiera('java')
 $mongodb = hiera('mongodb')
 $r = hiera('r')
+$http = hiera('http')
 
 $log_dir = $dir['log']
 $cache_dir = $dir['cache']
@@ -103,7 +103,11 @@ node 'default' {
         }
 	}
 
-		class { 'apache': }
+  if $http['install'] {
+
+    if $http['type'] == 'apache' {
+
+    include apache
 
 		if $php['symfony2'] {
 			apache::vhost { $apache['hostname']:
@@ -123,6 +127,19 @@ node 'default' {
 			    directory_require => 'all granted'
 			}
 		}
+    }
+
+    if $http['type'] == 'nginx' {
+
+      include nginx
+
+      nginx::symfony { $http['hostname']:
+        docroot => $dir['web'],
+        host => $http['hostname']
+      }
+
+    }
+  }
 
 
 	if $mysql['install'] {
