@@ -1,7 +1,6 @@
 class vim {
-  
 
-  include vim::install, vim::pathogen, vim::vimrc
+  include vim::install, vim::pathogen, vim::rcconf
 
   vim::plugin { 'nerdtree':
     repo => 'https://github.com/scrooloose/nerdtree.git'
@@ -22,11 +21,11 @@ class vim {
   vim::plugin { 'less':
     repo => 'https://github.com/groenewege/vim-less'
   }
-  
+
   vim::plugin { 'twig':
     repo => 'https://github.com/evidens/vim-twig.git'
   }
-  
+
   vim::plugin { 'solorized':
     repo => 'git://github.com/altercation/vim-colors-solarized.git'
   }
@@ -34,11 +33,11 @@ class vim {
   vim::plugin { 'hack':
     repo => 'git://github.com/hhvm/vim-hack.git'
   }
-  
+
   vim::plugin { 'markdown':
     repo => 'https://github.com/plasticboy/vim-markdown.git'
   }
-  
+
   vim::plugin { 'airline':
     repo => 'https://github.com/bling/vim-airline' 
   }
