@@ -3,7 +3,7 @@ FORGE
   specs:
     darin/zypprepo (1.0.1)
     example42/puppi (2.1.9)
-    maestrodev/wget (1.4.3)
+    maestrodev/wget (1.4.4)
     puppetlabs/apt (1.5.0)
       puppetlabs/stdlib (>= 2.2.1)
     puppetlabs/java (1.1.1)

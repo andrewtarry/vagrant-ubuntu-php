@@ -1,7 +1,7 @@
-class unzip {
+class unzip inherits unzip::params {
 
-	package { "unzip":
-		ensure => installed
-	}
+  package { $unzip::params::package :
+    ensure => latest
+  }
 
 }

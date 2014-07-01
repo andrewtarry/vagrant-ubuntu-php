@@ -1,0 +1,64 @@
+###########################################
+#
+# Confiuration specific to the application
+#
+##########################################
+application:
+    name: tam
+    project_root: /home/vagrant/project
+    web_root: /home/vagrant/project/web
+    cache_dir: /home/vagrant/project/app/cache
+    server_name: site.dev
+    port: 8000
+
+#######################################
+#
+# Languages that should be installed
+#
+######################################
+languages:
+    #
+    # PHP configuration to be installed
+    # version: hhvm, 5.5, latest, false - if not false then the zend engine php will still be installed
+    #
+    php:
+        version: hhvm
+        socket: 9123
+    #
+    # Nodejs version to install
+    # version: latest, false
+    #
+    nodejs:
+        version: latest
+    java:
+        version: latest
+    ruby:
+        version: false
+    java:
+        version: latest
+    r:
+        version: false
+
+####################################
+#
+# Tools and libraries required for the development environment
+#
+###################################
+tools:
+    gcc: true
+    jsonc: true
+    # Compser will install if php is installed
+    composer: true
+    # PHPMyAdmin will only be install if php is installed
+    phpmyadmin: true
+    # Grunt will only be installed if nodejs is installed
+    grunt: true
+    # Bower will only be installed if nodejs is installed
+    bower: true
+    mysql: true
+    #
+    # Webserver configuration
+    #
+    webserver:
+        # Which http server to install - apache, nginx or false 
+        type: nginx

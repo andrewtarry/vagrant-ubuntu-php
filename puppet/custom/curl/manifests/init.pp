@@ -1,6 +1,6 @@
-class curl {
+class curl inherits curl::params {
 
-  package {'curl':
+  package {$curl::params::package :
     ensure => installed
   }
 

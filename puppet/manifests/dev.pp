@@ -1,172 +1,166 @@
-# Load hiera variables
-$git = hiera('git')
-$php = hiera('php')
-$apache = hiera('apache')
-$nodejs = hiera('nodejs')
-$mysql = hiera('mysql')
-$c_tools = hiera('c_tools')
-$dir = hiera('dir')
-$ruby = hiera('ruby')
-$java = hiera('java')
-$mongodb = hiera('mongodb')
-$r = hiera('r')
+$application = hiera('application')
+$languages = hiera('languages')
+$tools = hiera('tools')
+$webserver_type = $tools['webserver']['type']
 
-$log_dir = $dir['log']
-$cache_dir = $dir['cache']
-
-# Dev node
 node 'default' {
 
-    # Set up the apt repos in a stage before the main puppet run 
-    stage { 'repos': 
-      before => Stage['main']
+  ##################################################
+  #
+  # Repo Stage
+  #
+  #################################################
+
+  # Set up the apt repos in a stage before the main puppet run 
+
+  stage { 'repos': 
+  before => Stage['main']
+  }
+
+  class { 'apt':
+    stage => repos,
+    always_apt_update => false
+  }
+
+  class { 'repo':
+    stage => repos
+  }
+
+  class { 'python':
+    stage => repos
+  }
+
+  ##############################################
+  #
+  # Main Stage
+  #
+  ##############################################
+
+
+  ########################
+  # Always install classes
+  ########################
+
+  class { 'curl': }
+  class { 'unzip': }
+  class { 'git': }
+
+  #
+  # Install vim and all the plugins
+  #
+  class { 'vim': }
+
+
+  # Set up the bash commands in the profile.
+  #
+  # There are no custom options as this command will only load the config file
+  class { 'bash':
+    cache_dir => $application['cache_dir']
+  }
+
+  # Host file configuration
+  class { 'hosts':
+    hostname => $application['server_name']
+  }
+
+
+
+  ###########################
+  # Webserer
+  ##########################
+  if $webserver_type {
+
+    if $webserver_type == 'apache' {
+      class {'apache': }
+
+      apache::vhost { $application['server_name']:
+        port => $application['port'],
+        docroot  => $application['web_root'],
+        directory => $application['web_root'],
+        directory_allow_override => 'All',
+        directory_require => 'all granted'
+      }
+    }elsif $webserver_type == 'nginx'{
+      class {'nginx': }
+
+      nginx::symfony { $application['server_name']:
+        host => $application['server_name'],
+        docroot => $application['web_root'],
+        port => $application['port'],
+        phpport => $languages['php']['socket']
+      }
+
     }
 
-    class { 'apt':
-      stage => repos,
-      always_apt_update => false
+  }
+
+  ###########################
+  # php
+  ##########################
+  $php_version = $languages['php']['version']
+  if $php_version != false {
+
+    class { 'php':
+      version => $php_version
     }
 
-    class { 'repo':
-      stage => repos
+    if $tools['composer'] {
+      class { 'composer': }
     }
 
-    class { 'python':
-      stage => repos
+    if $tools['phpmyadmin'] {
+      class { 'phpmyadmin': 
+      webserver => $webserver_type
+      }
     }
 
+    if $php_version == 'hhvm' {
+      class { 'hhvm': }
+    }
+  }
 
-    # Main Stage
+  #########################
+  # nodejs
+  ########################
+  $nodejs_version = $languages['nodejs']['version']
+  if $nodejs_version != false {
 
-    include curl
-    include unzip
-    include vim
-    include git
-
-    # Set up the bash commands in the profile.
-    #
-    # There are no custom options as this command will only load the config file
-    include bash
-
-    # Set up the hosts config
-    class { 'hosts':
-      hostname => $webhostname
+    class { 'nodejs': 
+    version => $nodejs_version
     }
 
+    if $tools['grunt'] {
+      nodejs::npm { 'grunt-cli': }
+    }
 
-	if $c_tools['gcc'] {
-		include gcc
-	}
+    if $tools['bower'] {
+      nodejs::npm { 'bower': }
+    }
 
-	if $git['install'] {
-		 include git
-	}
-
-	if $dir['app'] == $dir['web'] {
-		class { 'webroot':
-			dir => $dir['app']
-		}
-	}else{
-		class { 'webroot':
-			dir => [$dir['app'], $dir['web']]
-		}
-	}
-
-	if $php['install'] {
-
-   include php, hhvm, phpmyadmin, composer
-
-   if $php['symfony2'] {
-	    class { 'symfony2':
-	      	cache_dir => $cache_dir,
-	       	log_dir => $log_dir,
-	    	}
-	    }
+  }
 
 
-	    if $mongodb['install'] {
-        #	    	php::pecl { 'mongo': }
-	    }
-
-	}
-
-	if $nodejs['install'] {
-
-		class { 'nodejs': }
-
-		nodejs::npm { 'grunt-cli': }
-        nodejs::npm { 'bower': }
-
-        package {'node-less':
-          ensure => installed,
-          require => Class['nodejs']
-        }
-	}
-
-		class { 'apache': }
-
-		if $php['symfony2'] {
-			apache::vhost { $apache['hostname']:
-				port => $apache['siteport'],
-			    docroot  => $dir['web'],
-			    directory => $dir['web'],
-			    directory_allow_override => 'All',
-			    directory_require => 'all granted',
-			    env_variables => ["CACHE_DIR \"${cache_dir}\"", "LOG_DIR \"${log_dir}\""]
-			}
-		}else {
-			apache::vhost { $apache['hostname']:
-				port => $apache['siteport'],
-			    docroot  => $dir['web'],
-			    directory => $dir['web'],
-			    directory_allow_override => 'All',
-			    directory_require => 'all granted'
-			}
-		}
+  #######################
+  # Tools and libraries
+  ######################
+  if $tools['mysql'] {
+    class { 'mysql': }
+  }
 
 
-	if $mysql['install'] {
-		class { 'mysql': }
-	}
+  if $tools['jsonc'] {
+    class { 'jsonc': }
+  }
 
-	if $c_tools['re2c'] {
+  if $languages['java'] {
+    class {'java': }
+  }
 
-		package{ 're2c':
-			ensure => installed,
-			require => Exec['update_repo'],
-		}
-	}
+  if $languages['r'] {
+    class {'r': }
+  }
 
-	if $c_tools['jsonc'] {
-
-		class { 'jsonc': }
-	}
-
-	if $ruby['install'] {
-		class { 'ruby': }
-
-	}
-
-	if $java['install'] {
-
-		include java
-
-		if $java['jenkins'] {
-			class { 'jenkins':
-				install_java => false
-			}
-
-			jenkins::plugin {
-			  "git" : ;
-			}
-		}
-	}
-
-	if $mongodb['install'] {
-		include '::mongodb::server'
-	}
-
-	if $r['install'] {
-		include r
-	}
-}	
+  if $tools['gcc'] {
+    include gcc
+  }
+  }	
