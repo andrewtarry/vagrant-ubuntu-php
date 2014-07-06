@@ -11,4 +11,5 @@ class php::ini {
     ensure => file,
     require => Class['php::install']
   }
+
 }

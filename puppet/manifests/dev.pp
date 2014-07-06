@@ -101,7 +101,8 @@ node 'default' {
   if $php_version != false {
 
     class { 'php':
-      version => $php_version
+      version => $php_version,
+      port => $languages['php']['socket']
     }
 
     if $tools['composer'] {
