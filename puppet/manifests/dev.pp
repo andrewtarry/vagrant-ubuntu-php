@@ -167,4 +167,8 @@ node 'default' {
   if $tools['gcc'] {
     include gcc
   }
+
+  if $tools['mongodb'] {
+    include mongodb
+  }
   }	

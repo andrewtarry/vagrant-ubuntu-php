@@ -57,6 +57,7 @@ tools:
     # Bower will only be installed if nodejs is installed
     bower: true
     mysql: true
+    mongodb: false
     #
     # Webserver configuration
     #
