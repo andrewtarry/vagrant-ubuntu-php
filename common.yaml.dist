@@ -30,6 +30,7 @@ languages:
     #
     nodejs:
         version: latest
+        coffeescript: false
     java:
         version: latest
     ruby:

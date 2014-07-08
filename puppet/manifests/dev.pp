@@ -137,6 +137,10 @@ node 'default' {
       nodejs::npm { 'bower': }
     }
 
+    if $languages['nodejs']['coffeescript'] {
+      nodejs::npm { 'coffee-script': }
+    }
+
   }
 
 
