@@ -143,6 +143,10 @@ node 'default' {
       nodejs::npm { 'coffee-script': }
     }
 
+    if $languages['nodejs']['less'] {
+      nodejs::npm { 'less': }
+    }
+
   }
 
 
