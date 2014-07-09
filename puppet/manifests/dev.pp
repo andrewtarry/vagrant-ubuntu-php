@@ -44,6 +44,7 @@ node 'default' {
   class { 'curl': }
   class { 'unzip': }
   class { 'git': }
+  class { 'htop': }
 
   #
   # Install vim and all the plugins
