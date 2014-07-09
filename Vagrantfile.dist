@@ -4,6 +4,8 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+rootDir = File.expand_path('~')
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
@@ -13,7 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu1404"
 
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", 4096]
+    vb.customize ["modifyvm", :id, "--memory", 8192]
     vb.customize ["modifyvm", :id, "--cpus", 4]
   end
 
@@ -25,11 +27,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network :forwarded_port, guest: 8080, host: 9000
-
-  #config.vm.hostname = "dev"
-  config.vm.hostname = "php.dev"
-  #config.vm.hostname = "java.dev"
-  #config.vm.hostname = "r.dev"
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -50,6 +47,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # argument is a set of non-required options.
   config.vm.synced_folder "./project", "/home/vagrant/project", :nfs => true
 
+  if File.exist?("#{rootDir}/.vim")
+     config.vm.synced_folder "~/.vim", "/home/vagrant/.vim"
+  end
+
+
+  if File.exists?("#{rootDir}/.vimrc") 
+      config.vm.provision :file do |file|
+           file.source = "#{rootDir}/.vimrc"
+           file.destination = "/home/vagrant/.vimrc"  
+      end
+  end
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
@@ -69,19 +78,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # are contained in a directory path relative to this Vagrantfile.
   # You will need to create the manifests directory and a manifest in
   # the file base.pp in the manifests_path directory.
-  #
-  # An example Puppet manifest to provision the message of the day:
-  #
-  # # group { "puppet":
-  # #   ensure => "present",
-  # # }
-  # #
-  # # File { owner => 0, group => 0, mode => 0644 }
-  # #
-  # # file { '/etc/motd':
-  # #   content => "Welcome to your Vagrant-built virtual machine!
-  # #               Managed by Puppet.\n"
-  # # }
   #
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "puppet/manifests"
