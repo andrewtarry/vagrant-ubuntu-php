@@ -1,5 +1,5 @@
 class hhvm {
 
-  include hhvm::install
+  include hhvm::install, hhvm::ini
 
 }

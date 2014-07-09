@@ -1,7 +1,6 @@
 class nginx::service {
 
   service { 'nginx':
-    ensure => 'running',
-    require => Class['nginx::install']
+    ensure => 'running'
   }
 }

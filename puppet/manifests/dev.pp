@@ -44,6 +44,7 @@ node 'default' {
   class { 'curl': }
   class { 'unzip': }
   class { 'git': }
+  class { 'htop': }
 
   #
   # Install vim and all the plugins
@@ -101,7 +102,8 @@ node 'default' {
   if $php_version != false {
 
     class { 'php':
-      version => $php_version
+      version => $php_version,
+      port => $languages['php']['socket']
     }
 
     if $tools['composer'] {
@@ -137,6 +139,10 @@ node 'default' {
       nodejs::npm { 'bower': }
     }
 
+    if $languages['nodejs']['coffeescript'] {
+      nodejs::npm { 'coffee-script': }
+    }
+
   }
 
 
@@ -162,5 +168,9 @@ node 'default' {
 
   if $tools['gcc'] {
     include gcc
+  }
+
+  if $tools['mongodb'] {
+    include mongodb
   }
   }	
