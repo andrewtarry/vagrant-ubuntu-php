@@ -21,5 +21,6 @@ class php (
   class { 'php::ini': }->
   class { 'php::pear_install': }->
   class { 'php::extensions': }
+  class { 'php::config': }
 
 }

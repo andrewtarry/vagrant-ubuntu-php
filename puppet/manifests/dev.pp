@@ -2,6 +2,7 @@ $application = hiera('application')
 $languages = hiera('languages')
 $tools = hiera('tools')
 $webserver_type = $tools['webserver']['type']
+$php_version = $languages['php']['version']
 
 node 'default' {
 
@@ -56,7 +57,9 @@ node 'default' {
   #
   # There are no custom options as this command will only load the config file
   class { 'bash':
-    cache_dir => $application['cache_dir']
+    cache_dir => $application['cache_dir'],
+    webserver => $webserver_type,
+    php => $php_version
   }
 
   # Host file configuration
@@ -98,7 +101,6 @@ node 'default' {
   ###########################
   # php
   ##########################
-  $php_version = $languages['php']['version']
   if $php_version != false {
 
     class { 'php':
