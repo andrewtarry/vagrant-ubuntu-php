@@ -36,9 +36,7 @@ languages:
         version: latest
     ruby:
         version: false
-    java:
-        version: latest
-    r:
+   r:
         version: false
 
 ####################################
