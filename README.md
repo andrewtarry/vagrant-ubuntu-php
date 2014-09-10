@@ -10,7 +10,7 @@ In addition phpMyAdmin will be installed on port `8001` if you enable it.
 Installation
 ------------
 
-This VM uses [librarian-puppet](http://librarian-puppet.com/) and this will need to be installed before the VM can be started.
+This VM uses git submodules to include external libraries. 
 
 To set up all of the libraries you can run `./init.sh`. Then the VM will start with a `vagrant up`.
 
