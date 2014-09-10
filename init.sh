@@ -5,7 +5,7 @@ if [ ! -d project ]; then
 fi
 cp Vagrantfile.dist Vagrantfile
 cp common.yaml.dist common.yaml
-cd puppet
 echo -ne 'installing puppet modules...'
-librarian-puppet update
+git submodule init
+git submodule update
 echo "done"
