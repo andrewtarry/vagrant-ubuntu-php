@@ -21,8 +21,10 @@ languages:
     # PHP configuration to be installed
     # version: hhvm, 5.5, latest, false - if not false then the zend engine php will still be installed
     #
+    # Note - the php version must be a string so '5.5' is ok but 5.5 is not
+    #
     php:
-        version: hhvm
+        version: '5.5'
         socket: 9123
     #
     # Nodejs version to install

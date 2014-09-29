@@ -6,5 +6,4 @@ class php::install {
     ensure => latest
   }
 
-
 }

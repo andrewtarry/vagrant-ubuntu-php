@@ -24,4 +24,9 @@ class php::extensions {
     	require => Class['php::install'],
     	ensure => installed,
   	}
+
+  	package { "php5-intl":
+    	require => Class['php::install'],
+    	ensure => installed,
+  	}
 }
